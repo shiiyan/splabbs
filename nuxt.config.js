@@ -44,7 +44,8 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    'vue-sweetalert2/nuxt'
+    'vue-sweetalert2/nuxt',
+    // '@nuxtjs/vuetify'
   ],
   /*
   ** Axios module configuration
