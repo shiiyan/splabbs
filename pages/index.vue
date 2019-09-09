@@ -1,10 +1,22 @@
 <template>
-  <section id="main">
+  <section id="main" v-bind:class="{ ika: isIka }" class="stactic">
     <!-- データの入力 -->
     <div>
-      <textarea rows="4" cols="80" v-model="message" placeholder="Please enter a comment(within 100 characters)" maxlength="100"></textarea>
-      <button id="button--green" @click="sendData">
+      <textarea
+        v-bind:class="{ ika: isIka }"
+        class="stactic"
+        rows="1"
+        cols="50"
+        v-model="message"
+        placeholder="Please enter a comment(within 100 characters)"
+        maxlength="100"></textarea>
+    </div>
+    <div>
+      <button v-bind:class="{ ika: isIka }" class="stactic" @click="sendData">
         Submit
+      </button>
+      <button v-bind:class="{ ika: isIka }" class="stactic" @click="switchIka">
+        Switch
       </button>
     </div>
     <ul>
@@ -29,7 +41,8 @@ const db = firebase.firestore()
 export default {
   data () {
     return {
-      message: ''
+      message: '',
+      isIka: true
     }
   },
   computed: {
@@ -55,14 +68,31 @@ export default {
       }
       // データの登録
       db.collection('posts').add(dbdata)
+    },
+    switchIka () {
+      if (this.isIka) {
+        this.isIka = false
+      } else {
+        this.isIka = true
+      }
     }
   }
 }
 </script>
 
 <style>
-main {
-  font-family: 'inklink';
-  src: '~/dist/font/b882ed7.woff';
+@font-face {
+    font-family: 'inklink';
+    src: url('~assets/fonts/b882ed7.woff') format("woff");
 }
+
+.ika {
+  font-family: 'inklink';
+  font-size: 30px;
+}
+
+.stactic {
+  font-size: 30px;
+}
+
 </style>
