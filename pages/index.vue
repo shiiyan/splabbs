@@ -1,10 +1,10 @@
 <template>
-  <section id="main" v-bind:class="{ ika: isIka }" class="stactic">
+  <section id="main" v-bind:class="{ ika: isIka }" class="static">
     <!-- データの入力 -->
     <div>
       <textarea
         v-bind:class="{ ika: isIka }"
-        class="stactic"
+        class="static"
         rows="1"
         cols="50"
         v-model="message"
@@ -12,10 +12,10 @@
         maxlength="100"></textarea>
     </div>
     <div>
-      <button v-bind:class="{ ika: isIka }" class="stactic" @click="sendData">
+      <button v-bind:class="{ ika: isIka }" class="static" @click="sendData">
         Submit
       </button>
-      <button v-bind:class="{ ika: isIka }" class="stactic" @click="switchIka">
+      <button v-bind:class="{ ika: isIka }" class="static" @click="switchIka">
         Switch
       </button>
     </div>
@@ -80,7 +80,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 @font-face {
     font-family: 'inklink';
     src: url('~assets/fonts/b882ed7.woff') format("woff");
@@ -91,8 +91,7 @@ export default {
   font-size: 30px;
 }
 
-.stactic {
+.static {
   font-size: 30px;
 }
-
 </style>
