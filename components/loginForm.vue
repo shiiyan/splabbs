@@ -23,6 +23,9 @@ export default {
       password: ''
     }
   },
+  // created () {
+  //   console.log('created')
+  // },
   methods: {
     gotologin () {
       this.tologin = true
@@ -41,10 +44,12 @@ export default {
   computed: {
     ...mapState(['user'])
   },
-  mounted () {
+  created () {
+    console.log('created')
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setUser(user)
+        // console.log('mounted')
       }
     })
   }

@@ -26,7 +26,7 @@
     <ul>
       <!-- リスト形式データの表示 -->
       <li v-for="post in orderedPosts" :key="post.id">
-        {{ post.datetime }} Mr.nameless:
+        {{ post.datetime }} {{ post.owner }}:
         {{ post.message }}
       </li>
     </ul>
@@ -35,7 +35,7 @@
 
 <script>
 // import axios from 'axios'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import moment from 'moment'
 import _ from 'lodash'
 import upperBanner from '~/components/upperBanner.vue'
@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     // VuexからPostsデータを取得
-    ...mapGetters(['posts']),
+    ...mapGetters(['posts', 'user']),
     orderedPosts () {
       return _.orderBy(this.posts, 'datetime', 'desc')
     }
@@ -63,8 +63,17 @@ export default {
   created () {
     // firestoreのpostsをバインド
     this.$store.dispatch('setPostsRef', db.collection('posts'))
+    // this.setFromLS()
+    // console.log('created')
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setUser(user)
+        // console.log('mounted')
+      }
+    })
   },
   methods: {
+    ...mapActions(['setUser']),
     sendData () {
       // データのチェック
       if (this.message === '' || this.message.length > 100) {
@@ -72,7 +81,8 @@ export default {
       }
       const dbdata = {
         message: this.message,
-        datetime: moment(new Date()).format('YYYY/MM/DD HH:mm:ss')
+        datetime: moment(new Date()).format('YYYY/MM/DD HH:mm:ss'),
+        owner: this.user ? this.user.displayName : 'Mr.nameless'
       }
       // データの登録
       db.collection('posts').add(dbdata)

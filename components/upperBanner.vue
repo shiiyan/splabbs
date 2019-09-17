@@ -8,13 +8,22 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 import firebase from '~/plugins/firebase'
 
 export default {
   props: ['isIka'],
   computed: {
-    ...mapState(['user'])
+    ...mapState(['user']),
+    ...mapGetters(['user'])
+  },
+  created () {
+    console.log('created')
+    firebase.auth().onAuthStateChanged((cuser) => {
+      if (cuser) {
+        this.setUser(cuser)
+      }
+    })
   },
   methods: {
     ...mapActions(['setUser']),
@@ -24,6 +33,9 @@ export default {
         .catch((e) => { alert(e) })
         .then(() => { this.$router.push('/login') })
         .catch((e) => { alert(e) })
+      // if (process.browser) {
+      //   window.localStorage.setItem('currentUser', null)
+      // }
     },
     toprofile () {
       this.$router.push('/profile')
