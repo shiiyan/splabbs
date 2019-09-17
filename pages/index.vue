@@ -1,5 +1,9 @@
 <template>
   <section id="main" v-bind:class="{ ika: isIka }" class="static">
+    <upper-banner
+      :isIka="isIka"
+      v-bind:class="{ ika: isIka }">
+    </upper-banner>
     <!-- データの入力 -->
     <div>
       <textarea
@@ -34,6 +38,7 @@
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 import _ from 'lodash'
+import upperBanner from '~/components/upperBanner.vue'
 import firebase from '~/plugins/firebase.js'
 
 const db = firebase.firestore()
@@ -44,6 +49,9 @@ export default {
       message: '',
       isIka: true
     }
+  },
+  components: {
+    upperBanner
   },
   computed: {
     // VuexからPostsデータを取得
